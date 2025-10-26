@@ -3,12 +3,12 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h3 class="page-title">Daftar Warga</h3>
+        <h3 class="page-title">Data User</h3>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ route('warga.create') }}" class="btn btn-primary mb-3">+ Tambah Warga</a>
+            <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">+ Tambah User</a>
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -20,29 +20,19 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>RT</th>
-                            <th>RW</th>
-                            <th>Jenis Kelamin</th>
-                            <th>No HP</th>
+                            <th>Email</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($warga as $item)
+                        @forelse ($users as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->alamat }}</td>
-                                <td>{{ $item->rt }}</td>
-                                <td>{{ $item->rw }}</td>
-                                <td>{{ $item->jenis_kelamin }}</td>
-                                <td>{{ $item->no_hp }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->email }}</td>
                                 <td>
-                                    <a href="{{ route('warga.edit', $item->warga_id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-
-                                    <form action="{{ route('warga.destroy', $item->warga_id) }}" method="POST"
+                                    <a href="{{ route('users.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{{ route('users.destroy', $item->id) }}" method="POST"
                                         class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                         @csrf
                                         @method('DELETE')
@@ -52,7 +42,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center">Belum ada data warga</td>
+                                <td colspan="4" class="text-center">Belum ada data user</td>
                             </tr>
                         @endforelse
                     </tbody>
