@@ -52,8 +52,10 @@
                         <label>Jenis Kelamin</label>
                         <select name="jenis_kelamin" class="form-control" required>
                             <option value="">-- Pilih --</option>
-                            <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                            <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                            </option>
+                            <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                            </option>
                         </select>
                     </div>
 
@@ -62,8 +64,13 @@
                         <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}" required>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Simpan</button>
-                    <a href="{{ route('warga.index') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    </button>
+                    <a href="{{ route('warga.index') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali
+                    </a>
+
                 </form>
             </div>
         </div>

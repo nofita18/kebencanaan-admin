@@ -44,8 +44,13 @@
                         <input type="password" name="password_confirmation" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-rotate-right"></i> Update
+                    </button>
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali
+                    </a>
+
                 </form>
             </div>
         </div>

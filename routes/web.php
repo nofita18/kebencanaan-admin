@@ -11,29 +11,50 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PoskoBencanaController;
 use App\Http\Controllers\KejadianBencanaController;
 
+/*
+|--------------------------------------------------------------------------
+| ROUTING UTAMA
+|--------------------------------------------------------------------------
+*/
+
+// Jika belum login → arahkan ke login
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-Route::get('/kejadian', [KejadianController::class, 'index']);
-
-Route::get('/auth', [AuthController::class, 'index']);
-Route::post('/auth/login', [AuthController::class, 'login']);
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::resource('warga', WargaController::class);
-Route::resource('kejadian-bencana', KejadianBencanaController::class);
-
-Route::get('/awalan', function () {
-    return view('admin.awalan');
-});
-
-Route::resource('users', UserController::class);
-
+/*
+|--------------------------------------------------------------------------
+| AUTH
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'process'])->name('login.process');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+*/
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard.dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| CRUD MODUL
+|--------------------------------------------------------------------------
+*/
+Route::resource('users', UserController::class);
+Route::resource('warga', WargaController::class);
+Route::resource('kejadian-bencana', KejadianBencanaController::class);
 Route::resource('posko-bencana', PoskoBencanaController::class);
+
+// Kalau masih dipakai, ini boleh tetap:
+Route::get('/kejadian', [KejadianController::class, 'index']);
+Route::get('/auth', [AuthController::class, 'index']);
+Route::post('/auth/login', [AuthController::class, 'login']);

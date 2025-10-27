@@ -10,12 +10,12 @@
         </li>
 
         {{-- Warga --}}
-        <li class="nav-item {{ request()->is('warga*') ? 'active' : '' }}">
+        {{-- <li class="nav-item {{ request()->is('warga*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('warga.index') }}">
                 <i class="icon-head menu-icon"></i>
                 <span class="menu-title">Warga</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- Kejadian Bencana --}}
         <li class="nav-item {{ request()->is('kejadian-bencana*') ? 'active' : '' }}">
@@ -30,6 +30,14 @@
             <a class="nav-link" href="{{ route('posko-bencana.index') }}">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Posko Bencana</span>
+            </a>
+        </li>
+
+        {{-- Warga --}}
+        <li class="nav-item {{ request()->is('warga*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('warga.index') }}">
+                <i class="icon-head menu-icon"></i>
+                <span class="menu-title">Warga</span>
             </a>
         </li>
 

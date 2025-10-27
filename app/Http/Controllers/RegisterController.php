@@ -13,7 +13,7 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        return view('admin.register');
+        return view('admin.auth.register');
     }
 
     /**
@@ -47,7 +47,7 @@ class RegisterController extends Controller
             'user_email' => $user->email,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Anda berhasil ditambahkan & sudah login!');
+        return redirect()->route('dashboard.awalan')->with('success', 'Anda berhasil ditambahkan & sudah login!');
     }
 
     /**
