@@ -13,7 +13,7 @@ class KejadianBencanaController extends Controller
     public function index()
     {
         $kejadian = KejadianBencana::all();
-        return view('admin.kejadian-bencana.index', compact('kejadian'));
+        return view('pages.kejadian-bencana.index', compact('kejadian'));
     }
 
     /**
@@ -21,7 +21,7 @@ class KejadianBencanaController extends Controller
      */
     public function create()
     {
-        return view('admin.kejadian-bencana.create');
+        return view('pages.kejadian-bencana.create');
     }
 
     /**
@@ -71,7 +71,7 @@ class KejadianBencanaController extends Controller
     public function edit(string $id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
-        return view('admin.kejadian-bencana.edit', compact('kejadian'));
+        return view('pages.kejadian-bencana.edit', compact('kejadian'));
     }
 
     /**

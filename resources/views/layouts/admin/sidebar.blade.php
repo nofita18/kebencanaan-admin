@@ -17,6 +17,9 @@
             </a>
         </li> --}}
 
+        {{-- Penanda Fitur Utama --}}
+        <li class="nav-section-title">Fitur Utama</li>
+
         {{-- Kejadian Bencana --}}
         <li class="nav-item {{ request()->is('kejadian-bencana*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('kejadian-bencana.index') }}">
@@ -32,6 +35,9 @@
                 <span class="menu-title">Posko Bencana</span>
             </a>
         </li>
+
+        {{-- Penanda Master Data --}}
+        <li class="nav-section-title">Master Data</li>
 
         {{-- Warga --}}
         <li class="nav-item {{ request()->is('warga*') ? 'active' : '' }}">

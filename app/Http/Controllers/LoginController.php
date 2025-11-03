@@ -13,7 +13,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('admin.auth.login');
+        return view('pages.auth.login');
     }
 
     public function process(Request $request)

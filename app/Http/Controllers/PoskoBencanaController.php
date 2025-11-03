@@ -11,13 +11,13 @@ class PoskoBencanaController extends Controller
     public function index()
     {
         $posko = PoskoBencana::with('kejadian')->get();
-        return view('admin.posko-bencana.index', compact('posko'));
+        return view('pages.posko-bencana.index', compact('posko'));
     }
 
     public function create()
     {
         $kejadian = \App\Models\KejadianBencana::all();
-        return view('admin.posko-bencana.create', compact('kejadian'));
+        return view('pages.posko-bencana.create', compact('kejadian'));
     }
 
     public function store(Request $request)
@@ -55,7 +55,7 @@ class PoskoBencanaController extends Controller
     {
         $posko    = PoskoBencana::findOrFail($id);
         $kejadian = KejadianBencana::all();
-        return view('admin.posko-bencana.edit', compact('posko', 'kejadian'));
+        return view('pages.posko-bencana.edit', compact('posko', 'kejadian'));
     }
 
     public function update(Request $request, $id)

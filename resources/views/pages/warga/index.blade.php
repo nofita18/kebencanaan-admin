@@ -36,10 +36,15 @@
                                     <td>{{ $item->alamat }}</td>
                                     <td>{{ $item->rt }}</td>
                                     <td>{{ $item->rw }}</td>
-                                    <td>{{ $item->jenis_kelamin }}</td>
+                                    <td class="text-center">
+                                        <span class="badge-gender {{ strtolower($item->jenis_kelamin) == 'perempuan' ? 'badge-perempuan' : 'badge-laki' }}">
+                                            {{ ucfirst($item->jenis_kelamin) }}
+                                        </span>
+                                    </td>
                                     <td>{{ $item->no_hp }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('warga.edit', $item->warga_id) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('warga.edit', $item->warga_id) }}"
+                                            class="btn btn-sm btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
 
