@@ -20,14 +20,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .theme-setting-wrapper {
-            position: fixed;
-            bottom: 200px;
-            /* Naik ke atas supaya tidak menutupi tombol WhatsApp */
-            right: 25px;
-            z-index: 1001;
-            /* Supaya tetap di atas layer lain */
-        }
-</style>

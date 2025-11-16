@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kejadian_bencana', function (Blueprint $table) {
-            $table->increments('kejadian_id');
+            $table->bigIncrements('kejadian_id');
             $table->string('jenis_bencana', 100); // misal "Banjir", "Kebakaran", dst.
             $table->date('tanggal');
             $table->string('lokasi', 150); // nama lokasi atau alamat singkat

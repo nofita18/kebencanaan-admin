@@ -9,6 +9,7 @@ use App\Http\Controllers\KejadianController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PoskoBencanaController;
+use App\Http\Controllers\DonasiBencanaController;
 use App\Http\Controllers\KejadianBencanaController;
 
 /*
@@ -21,6 +22,10 @@ use App\Http\Controllers\KejadianBencanaController;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+Route::post('/logout', function () {
+    auth()->logout();
+    return redirect('/login');
+})->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +34,7 @@ Route::get('/', function () {
 */
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'process'])->name('login.process');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
@@ -53,6 +58,7 @@ Route::resource('users', UserController::class);
 Route::resource('warga', WargaController::class);
 Route::resource('kejadian-bencana', KejadianBencanaController::class);
 Route::resource('posko-bencana', PoskoBencanaController::class);
+Route::resource('donasi-bencana', DonasiBencanaController::class);
 
 // Kalau masih dipakai, ini boleh tetap:
 Route::get('/kejadian', [KejadianController::class, 'index']);

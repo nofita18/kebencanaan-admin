@@ -36,6 +36,14 @@
             </a>
         </li>
 
+        {{-- Donasi Bencana --}}
+        <li class="nav-item {{ request()->is('donasi-bencana*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('donasi-bencana.index') }}">
+                <i class="icon-bar-graph menu-icon"></i>
+                <span class="menu-title">Donasi Bencana</span>
+            </a>
+        </li>
+
         {{-- Penanda Master Data --}}
         <li class="nav-section-title">Master Data</li>
 
@@ -54,6 +62,17 @@
                 <span class="menu-title">Users</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="nav-link btn btn-link text-left" style="width:100%; color:#dc3545;">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span class="menu-title">Logout</span>
+                </button>
+            </form>
+        </li>
+
 
         {{-- Donasi Bencana --}}
         {{-- <li class="nav-item {{ request()->is('donasi-bencana*') ? 'active' : '' }}">

@@ -53,7 +53,7 @@ class KejadianBencanaController extends Controller
 
         KejadianBencana::create($data);
 
-        return redirect()->route('kejadian-bencana.create')
+        return redirect()->route('kejadian-bencana.index')
             ->with('success', 'Data kejadian bencana berhasil ditambahkan!');
     }
 

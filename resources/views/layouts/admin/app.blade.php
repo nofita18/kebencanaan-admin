@@ -35,6 +35,13 @@
     .floating-whatsapp:hover {
         background-color: #20b358;
     }
+
+    /* .theme-setting-wrapper {
+            position: fixed;
+            bottom: 300px;
+            right: 25px;
+            z-index: 1001;
+        } */
 </style>
 
 <body>

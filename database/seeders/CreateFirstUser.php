@@ -15,8 +15,8 @@ class CreateFirstUser extends Seeder
     public function run(): void
     {
         $data['name'] = 'nopi';
-        $data['email'] = 'nopi18@gmail.com';
-        $data['password'] = Hash::make('nopi1234');
+        $data['email'] = 'example@gmail.com';
+        $data['password'] = Hash::make('password123');
         User::create($data);
     }
 }
