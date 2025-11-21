@@ -9,10 +9,37 @@ use Illuminate\Support\Facades\Storage;
 
 class DonasiBencanaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $donasi = DonasiBencana::with(['kejadian', 'posko'])->get();
-        return view('pages.donasi-bencana.index', compact('donasi'));
+        $query = DonasiBencana::with(['kejadian', 'posko']);
+
+        // --- SEARCH donor, jenis, catatan ---
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('donatur_nama', 'like', "%{$request->search}%")
+                    ->orWhere('jenis', 'like', "%{$request->search}%")
+                    ->orWhere('catatan', 'like', "%{$request->search}%");
+            });
+        }
+
+        // --- FILTER berdasarkan kejadian ---
+        if ($request->kejadian_id) {
+            $query->where('kejadian_id', $request->kejadian_id);
+        }
+
+        // --- FILTER berdasarkan posko ---
+        if ($request->posko_id) {
+            $query->where('posko_id', $request->posko_id);
+        }
+
+        // PAGINATION
+        $donasi = $query->paginate(10)->withQueryString();
+
+        // data dropdown filter
+        $kejadian = KejadianBencana::all();
+        $posko    = PoskoBencana::all();
+
+        return view('pages.donasi-bencana.index', compact('donasi', 'kejadian', 'posko'));
     }
 
     public function create()
@@ -26,13 +53,13 @@ class DonasiBencanaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'donatur_nama'   => 'required|string',
-            'jenis'   => 'required|string',
-            'nilai' => 'nullable|numeric',
-            'kejadian_id'    => 'required|exists:kejadian_bencana,kejadian_id',
-            'posko_id'       => 'nullable',
-            'catatan'        => 'nullable|string',
-            'bukti'   => 'nullable|image|max:2048',
+            'donatur_nama' => 'required|string',
+            'jenis'        => 'required|string',
+            'nilai'        => 'nullable|numeric',
+            'kejadian_id'  => 'required|exists:kejadian_bencana,kejadian_id',
+            'posko_id'     => 'nullable',
+            'catatan'      => 'nullable|string',
+            'bukti'        => 'nullable|image|max:2048',
         ]);
 
         $data = $request->all();
@@ -65,13 +92,13 @@ class DonasiBencanaController extends Controller
         $donasi = DonasiBencana::findOrFail($id);
 
         $request->validate([
-            'donatur_nama'   => 'required|string',
-            'jenis'   => 'required|string',
-            'nilai' => 'nullable|numeric',
-            'kejadian_id'    => 'required|exists:kejadian_bencana,kejadian_id',
-            'posko_id'       => 'nullable',
-            'catatan'        => 'nullable|string',
-            'bukti'   => 'nullable|image|max:2048',
+            'donatur_nama' => 'required|string',
+            'jenis'        => 'required|string',
+            'nilai'        => 'nullable|numeric',
+            'kejadian_id'  => 'required|exists:kejadian_bencana,kejadian_id',
+            'posko_id'     => 'nullable',
+            'catatan'      => 'nullable|string',
+            'bukti'        => 'nullable|image|max:2048',
         ]);
 
         $data = $request->all();

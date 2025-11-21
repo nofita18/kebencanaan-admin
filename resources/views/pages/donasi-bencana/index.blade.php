@@ -13,7 +13,45 @@
                 @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
+                <form method="GET" class="row mb-3">
 
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Cari nama donatur / jenis / catatan..." value="{{ request('search') }}">
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="kejadian_id" class="form-control">
+                            <option value="">-- Filter Kejadian --</option>
+                            @foreach ($kejadian as $k)
+                                <option value="{{ $k->kejadian_id }}"
+                                    {{ request('kejadian_id') == $k->kejadian_id ? 'selected' : '' }}>
+                                    {{ $k->jenis_bencana }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- <div class="col-md-3">
+                        <select name="posko_id" class="form-control">
+                            <option value="">-- Filter Posko --</option>
+                            @foreach ($posko as $p)
+                                <option value="{{ $p->posko_id }}"
+                                    {{ request('posko_id') == $p->posko_id ? 'selected' : '' }}>
+                                    {{ $p->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div> --}}
+
+                    <div class="col-md-2 mt-2 mt-md-0">
+                        <button class="btn btn-primary w-100">Filter</button>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ route('donasi-bencana.index') }}" class="btn btn-secondary w-100">Reset</a>
+                    </div>
+
+                </form>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead class="table-primary text-center">
@@ -38,8 +76,8 @@
 
                                     <td class="text-center">
                                         @if ($d->bukti)
-                                            <img src="{{ asset('storage/donasi_bencana/' . $d->bukti) }}"
-                                                 width="70" alt="bukti">
+                                            <img src="{{ asset('storage/donasi_bencana/' . $d->bukti) }}" width="70"
+                                                alt="bukti">
                                         @else
                                             <span class="text-muted">Tidak ada</span>
                                         @endif
@@ -51,9 +89,8 @@
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
 
-                                        <form action="{{ route('donasi-bencana.destroy', $d->donasi_id) }}"
-                                            method="POST" class="d-inline"
-                                            onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        <form action="{{ route('donasi-bencana.destroy', $d->donasi_id) }}" method="POST"
+                                            class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger">
@@ -69,6 +106,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-3">
+                        {{ $donasi->links('pagination::bootstrap-5') }}
+                    </div>
                 </div>
             </div>
         </div>

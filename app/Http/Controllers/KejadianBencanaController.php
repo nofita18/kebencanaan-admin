@@ -10,9 +10,33 @@ class KejadianBencanaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kejadian = KejadianBencana::all();
+        $query = KejadianBencana::query();
+
+        // --- SEARCH berdasarkan jenis, lokasi, keterangan, dampak ---
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('jenis_bencana', 'like', "%{$request->search}%")
+                    ->orWhere('lokasi', 'like', "%{$request->search}%")
+                    ->orWhere('dampak', 'like', "%{$request->search}%")
+                    ->orWhere('keterangan', 'like', "%{$request->search}%");
+            });
+        }
+
+        // --- FILTER status kejadian ---
+        if ($request->status_kejadian) {
+            $query->where('status_kejadian', $request->status_kejadian);
+        }
+
+        // --- FILTER berdasarkan tanggal ---
+        if ($request->tanggal) {
+            $query->whereDate('tanggal', $request->tanggal);
+        }
+
+        // --- PAGINATION ---
+        $kejadian = $query->paginate(10)->withQueryString();
+
         return view('pages.kejadian-bencana.index', compact('kejadian'));
     }
 

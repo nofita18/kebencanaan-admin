@@ -82,4 +82,27 @@
             /* biru muda */
             color: #000;
         }
+
+        .badge-status {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            min-width: 100px;
+            color: #fff;
+        }
+
+        /* Merah untuk Aktif */
+        .badge-aktif {
+            background-color: #e74c3c;
+            /* merah */
+        }
+
+        /* Hijau untuk Selesai */
+        .badge-selesai {
+            background-color: #2ecc71;
+            /* hijau */
+        }
     </style>

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -11,9 +10,27 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+
+        // Search (nama atau email)
+        if ($request->search) {
+            $query->where('name', 'like', "%{$request->search}%")
+                ->orWhere('email', 'like', "%{$request->search}%");
+        }
+
+        // Filter email domain (opsional)
+        if ($request->email_domain) {
+            $query->where('email', 'like', "%@{$request->email_domain}");
+        }
+
+        // Dropdown pagination
+        $perPage = $request->input('per_page', 10);
+
+        // Pagination + simpan query ketika pindah halaman
+        $users = $query->paginate($perPage)->appends($request->all());
+
         return view('pages.user.index', compact('users'));
     }
 
@@ -31,23 +48,23 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed'
+            'name'     => 'required|string|max:100',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:8|confirmed',
         ]);
 
         //Enkripsi password
-        $data = $request->all();
+        $data             = $request->all();
         $data['password'] = Hash::make($request->password);
 
         //Simpan ke database
         $user = User::create($data);
 
         session([
-        'logged_in' => true,
-        'user_id' => $user->id,
-        'user_name' => $user->name,
-        'user_email' => $user->email,
+            'logged_in'  => true,
+            'user_id'    => $user->id,
+            'user_name'  => $user->name,
+            'user_email' => $user->email,
         ]);
 
         //Redirect dg pesan sukses
@@ -80,9 +97,9 @@ class UserController extends Controller
 
         // Validasi
         $request->validate([
-            'name' => 'required|string|max:100',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed'
+            'name'     => 'required|string|max:100',
+            'email'    => 'required|email',
+            'password' => 'required|min:8|confirmed',
         ]);
 
         $data = $request->all();

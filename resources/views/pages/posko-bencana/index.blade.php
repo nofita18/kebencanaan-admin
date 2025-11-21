@@ -13,6 +13,33 @@
                 @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
+                <form method="GET" class="row mb-3">
+
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Cari nama posko / alamat / penanggung jawab..." value="{{ request('search') }}">
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="kejadian_id" class="form-control">
+                            <option value="">-- Filter Kejadian --</option>
+                            @foreach ($kejadian as $k)
+                                <option value="{{ $k->kejadian_id }}"
+                                    {{ request('kejadian_id') == $k->kejadian_id ? 'selected' : '' }}>
+                                    {{ $k->jenis_bencana }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Filter</button>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="{{ route('posko-bencana.index') }}" class="btn btn-secondary w-100">Reset</a>
+                    </div>
+                </form>
 
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -69,6 +96,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-3">
+                        {{ $posko->links('pagination::bootstrap-5') }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,9 +7,36 @@ use Illuminate\Http\Request;
 class WargaController extends Controller
 {
     // Menampilkan daftar warga
-    public function index()
+    public function index(Request $request)
     {
-        $warga = Warga::all();
+        $query = Warga::query();
+
+        // Search (cari nama / alamat / no hp)
+        if ($request->search) {
+            $query->where('nama', 'like', "%{$request->search}%")
+                ->orWhere('alamat', 'like', "%{$request->search}%")
+                ->orWhere('no_hp', 'like', "%{$request->search}%");
+        }
+
+        // Filter Jenis Kelamin
+        if ($request->jenis_kelamin) {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
+        }
+
+        // Filter RT
+        if ($request->rt) {
+            $query->where('rt', $request->rt);
+        }
+
+        // Filter RW
+        if ($request->rw) {
+            $query->where('rw', $request->rw);
+        }
+
+        // Pagination (default 10) + append query agar tidak hilang saat pindah halaman
+        $perPage = $request->input('per_page', 10);
+        $warga   = $query->paginate($perPage)->appends($request->all());
+
         return view('pages.warga.index', compact('warga'));
     }
 
@@ -51,19 +78,19 @@ class WargaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|max:100',
-            'alamat' => 'required|max:255',
-            'rt' => 'required|max:5',
-            'rw' => 'required|max:5',
+            'nama'          => 'required|max:100',
+            'alamat'        => 'required|max:255',
+            'rt'            => 'required|max:5',
+            'rw'            => 'required|max:5',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'no_hp' => 'required|max:15',
+            'no_hp'         => 'required|max:15',
         ]);
 
         $warga = Warga::findOrFail($id);
         $warga->update($request->all());
 
         return redirect()->route('warga.index')
-                         ->with('success', 'Data warga berhasil diperbarui!');
+            ->with('success', 'Data warga berhasil diperbarui!');
     }
 
     // Hapus data
@@ -73,6 +100,6 @@ class WargaController extends Controller
         $warga->delete();
 
         return redirect()->route('warga.index')
-                         ->with('success', 'Data warga berhasil dihapus!');
+            ->with('success', 'Data warga berhasil dihapus!');
     }
 }

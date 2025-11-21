@@ -15,6 +15,38 @@
                 @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
+                <form method="GET" class="row mb-3">
+
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Cari jenis bencana / lokasi / dampak..." value="{{ request('search') }}">
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="status_kejadian" class="form-control">
+                            <option value="">-- Pilih Status --</option>
+                            <option value="Aktif" {{ request('status_kejadian') == 'Aktif' ? 'selected' : '' }}>Aktif
+                            </option>
+                            <option value="Selesai" {{ request('status_kejadian') == 'Selesai' ? 'selected' : '' }}>Selesai
+                            </option>
+                        </select>
+                    </div>
+
+                    {{-- <div class="col-md-3">
+                        <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}">
+                    </div> --}}
+
+                    <div class="col-md-2 mt-2 mt-md-0">
+                        <button class="btn btn-primary w-100">Filter</button>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ route('kejadian-bencana.index') }}" class="btn btn-secondary w-100">Reset</a>
+                    </div>
+
+                </form>
+
+                {{-- <a href="{{ route('kejadian-bencana.index') }}" class="btn btn-secondary mb-3">Reset</a> --}}
+
                 {{-- Tabel data --}}
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -43,7 +75,11 @@
                                     <td>{{ $item->rt }}</td>
                                     <td>{{ $item->rw }}</td>
                                     <td>{{ $item->dampak }}</td>
-                                    <td>{{ $item->status_kejadian }}</td>
+                                    <td class="text-center">
+                                        <span class="badge-status {{ strtolower($item->status_kejadian) == 'aktif' ? 'badge-aktif' : 'badge-selesai' }}">
+                                            {{ ucfirst($item->status_kejadian) }}
+                                        </span>
+                                    </td>
                                     <td>{{ $item->keterangan ?? '-' }}</td>
                                     <td>
                                         @if ($item->foto)
@@ -81,6 +117,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-3">
+                        {{ $kejadian->links('pagination::bootstrap-5') }}
+                    </div>
                 </div>
             </div>
         </div>

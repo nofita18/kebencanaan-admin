@@ -8,10 +8,31 @@ use Illuminate\Support\Facades\Storage;
 
 class PoskoBencanaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posko = PoskoBencana::with('kejadian')->get();
-        return view('pages.posko-bencana.index', compact('posko'));
+        $query = PoskoBencana::with('kejadian');
+
+        // --- SEARCH (nama posko + alamat + penanggung jawab) ---
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', "%{$request->search}%")
+                    ->orWhere('alamat', 'like', "%{$request->search}%")
+                    ->orWhere('penanggung_jawab', 'like', "%{$request->search}%");
+            });
+        }
+
+        // --- FILTER berdasarkan kejadian bencana ---
+        if ($request->kejadian_id) {
+            $query->where('kejadian_id', $request->kejadian_id);
+        }
+
+        // PAGINATION (10 data per halaman)
+        $posko = $query->paginate(10)->withQueryString();
+
+        // data kejadian untuk dropdown filter
+        $kejadian = KejadianBencana::all();
+
+        return view('pages.posko-bencana.index', compact('posko', 'kejadian'));
     }
 
     public function create()

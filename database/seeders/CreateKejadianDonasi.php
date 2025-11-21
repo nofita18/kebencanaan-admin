@@ -2,36 +2,49 @@
 
 namespace Database\Seeders;
 
-use App\Models\DonasiBencana;
-use App\Models\KejadianBencana;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class CreateKejadianDonasi extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $kejadian = KejadianBencana::create([
-            'jenis_bencana'  => 'Banjir',
-            'tanggal'        => '2025-01-10',
-            'lokasi'         => 'RT 02 / RW 05 Desa Sukamaju',
-            'rt'             => '02',
-            'rw'             => '05',
-            'dampak'         => 'Puluhan rumah terendam',
-            'status_kejadian'=> 'aktif',
-            'keterangan'     => 'Curah hujan tinggi.',
-            'foto'           => null,
-        ]);
+        $faker = Faker::create('id_ID');
 
-        DonasiBencana::create([
-            'kejadian_id'  => $kejadian->kejadian_id,   // Relasi
-            'donatur_nama' => 'PT Sumber Jaya',
-            'jenis'        => 'Uang Tunai',
-            'nilai'        => 5000000,
-            'bukti'        => null,
-        ]);
+        for ($i = 1; $i <= 100; $i++) {
+
+            // 1. KEJADIAN BENCANA
+            $kejadianId = DB::table('kejadian_bencana')->insertGetId([
+                'jenis_bencana'    => $faker->randomElement(['Banjir', 'Kebakaran', 'Longsor', 'Gempa', 'Puting Beliung']),
+                'tanggal'          => $faker->date(),
+                'lokasi'           => $faker->streetAddress() . ', ' . $faker->city(),
+                'rt'               => (string) $faker->numberBetween(1, 20),
+                'rw'               => (string) $faker->numberBetween(1, 20),
+                'dampak'           => $faker->randomElement(['Rumah Rusak', 'Korban Luka', 'Korban Jiwa', 'Jalan Terputus', 'Fasilitas umum rusak', 'Warga harus ngungsi']),
+                'status_kejadian'  => $faker->randomElement(['Aktif', 'Selesai']),
+                'keterangan'       => $faker->sentence(),
+                'foto'             => null,
+            ]);
+
+            // 2. POSKO BENCANA
+            DB::table('posko_bencana')->insert([
+                'kejadian_id'       => $kejadianId,
+                'nama'              => 'Posko ' . ucfirst($faker->word()),
+                'alamat'            => $faker->streetAddress(),
+                'kontak'            => $faker->phoneNumber(),
+                'penanggung_jawab'  => $faker->name(),
+                'foto'              => null,
+            ]);
+
+            // 3. DONASI BENCANA
+            DB::table('donasi_bencana')->insert([
+                'kejadian_id'   => $kejadianId,
+                'donatur_nama'  => $faker->name(),
+                'jenis'         => $faker->randomElement(['Uang', 'Makanan', 'Pakaian', 'Obat-obatan']),
+                'nilai'         => $faker->randomFloat(2, 50000, 5000000), // 50 ribu - 5 juta
+                'bukti'         => null,
+            ]);
+        }
     }
 }
