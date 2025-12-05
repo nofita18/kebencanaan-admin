@@ -33,6 +33,14 @@
                         <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}"
                             required>
                     </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select name="role" class="form-control" required>
+                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="staff" {{ $user->role == 'staff' ? 'selected' : '' }}>staff</option>
+                            <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label>Password (kosongkan jika tidak diganti)</label>

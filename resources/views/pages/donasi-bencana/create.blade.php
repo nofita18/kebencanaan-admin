@@ -47,7 +47,7 @@
                             @foreach ($kejadian as $k)
                                 <option value="{{ $k->kejadian_id }}"
                                     {{ old('kejadian_id') == $k->kejadian_id ? 'selected' : '' }}>
-                                    {{ $k->jenis_bencana }} - {{ $k->lokasi_text }}
+                                    {{ $k->jenis_bencana }}
                                 </option>
                             @endforeach
                         </select>

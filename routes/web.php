@@ -12,55 +12,43 @@ use App\Http\Controllers\PoskoBencanaController;
 use App\Http\Controllers\DonasiBencanaController;
 use App\Http\Controllers\KejadianBencanaController;
 
-/*
-|--------------------------------------------------------------------------
-| ROUTING UTAMA
-|--------------------------------------------------------------------------
-*/
-
-// Jika belum login → arahkan ke login
+//Route Utama (bisa di akses tanpa login)
+// Redirect default → login
 Route::get('/', function () {
     return redirect()->route('login');
 });
-Route::post('/logout', function () {
-    auth()->logout();
-    return redirect('/login');
-})->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| AUTH
-|--------------------------------------------------------------------------
-*/
+// Halaman login
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'process'])->name('login.process');
-// Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Proses login
+Route::post('/login', [LoginController::class, 'process'])->name('login.process');
+
+// Register
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
-/*
-|--------------------------------------------------------------------------
-| DASHBOARD
-|--------------------------------------------------------------------------
-*/
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard.dashboard');
+// Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| CRUD MODUL
-|--------------------------------------------------------------------------
-*/
-Route::resource('users', UserController::class);
-Route::resource('warga', WargaController::class);
-Route::resource('kejadian-bencana', KejadianBencanaController::class);
-Route::resource('posko-bencana', PoskoBencanaController::class);
-Route::resource('donasi-bencana', DonasiBencanaController::class);
+//Route yg butuh login
+Route::middleware('checkislogin')->group(function () {
 
-// Kalau masih dipakai, ini boleh tetap:
-Route::get('/kejadian', [KejadianController::class, 'index']);
-Route::get('/auth', [AuthController::class, 'index']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard.dashboard');
+    })->name('dashboard');
+
+    // CRUD
+    Route::resource('users', UserController::class)->middleware('checkrole:admin');
+    Route::resource('warga', WargaController::class);
+    Route::resource('kejadian-bencana', KejadianBencanaController::class);
+    Route::resource('posko-bencana', PoskoBencanaController::class);
+    Route::resource('donasi-bencana', DonasiBencanaController::class);
+
+    Route::get('/kejadian', [KejadianController::class, 'index']);
+});
+
+Route::get('/logout', function () {
+    abort(405); // GET tidak diizinkan
+});

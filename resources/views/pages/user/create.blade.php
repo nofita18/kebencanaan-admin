@@ -35,6 +35,13 @@
                         <label>Email</label>
                         <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
                     </div>
+                    <label>Role</label>
+                    <select name="role" class="form-control" required>
+                        <option value="">-- Pilih Role --</option>
+                        <option value="admin">admin</option>
+                        <option value="staff">staff</option>
+                        <option value="user">user</option>
+                    </select>
 
                     <div class="form-group">
                         <label>Password</label>

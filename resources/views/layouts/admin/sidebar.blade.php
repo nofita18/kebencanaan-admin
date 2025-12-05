@@ -64,15 +64,16 @@
         </li>
 
         <li class="nav-item">
-            <form action="{{ route('logout') }}" method="POST">
+            <a class="nav-link text-danger" href="#"
+                onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span class="menu-title">Logout</span>
+            </a>
+
+            <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
-                <button type="submit" class="nav-link btn btn-link text-left" style="width:100%; color:#dc3545;">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span class="menu-title">Logout</span>
-                </button>
             </form>
         </li>
-
 
         {{-- Donasi Bencana --}}
         {{-- <li class="nav-item {{ request()->is('donasi-bencana*') ? 'active' : '' }}">

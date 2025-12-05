@@ -62,13 +62,12 @@
 
                     <div class="form-group">
                         <label>Foto (opsional)</label>
-                        @if ($kejadian->foto)
-                            <div class="mb-2">
-                                <img src="{{ asset('storage/' . $kejadian->foto) }}" alt="Foto kejadian" width="150"
-                                    class="img-thumbnail">
-                            </div>
+                        @if ($kejadian->media->count())
+                            @foreach ($kejadian->media as $m)
+                                <img src="{{ asset('storage/' . $m->file_path) }}" width="120" class="m-1 img-thumbnail">
+                            @endforeach
                         @endif
-                        <input type="file" name="foto" class="form-control">
+                        <input type="file" name="media_files[]" class="form-control" multiple>
                     </div>
 
                     <button type="submit" class="btn btn-primary">

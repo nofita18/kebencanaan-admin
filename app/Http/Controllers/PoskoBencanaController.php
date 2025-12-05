@@ -69,7 +69,7 @@ class PoskoBencanaController extends Controller
             'foto'             => $fotoName, // langsung pakai variabel yang udah didefinisikan
         ]);
 
-        return redirect()->route('posko-bencana.create')->with('success', 'Data posko berhasil ditambahkan!');
+        return redirect()->route('posko-bencana.index')->with('success', 'Data posko berhasil ditambahkan!');
     }
 
     public function edit($id)

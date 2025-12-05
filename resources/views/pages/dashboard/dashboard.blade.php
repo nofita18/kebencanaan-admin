@@ -9,14 +9,14 @@
     <div class="content-wrapper">
         <div class="row">
             <div class="col-md-12 grid-margin">
-                @if (session('success'))
+                {{-- @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
-                @endif
+                @endif --}}
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">Halo, {{ session('user_name') ?? 'Pengguna' }}</h3>
+                        <h3 class="font-weight-bold">Halo, {{ auth()->user()->name }}</h3>
                         <h6 class="font-weight-normal mb-0">Selamat datang di Sistem Informasi Bina Desa
                             <span class="text-primary">Kebencanaan & Tanggap Darurat</span>
                         </h6>

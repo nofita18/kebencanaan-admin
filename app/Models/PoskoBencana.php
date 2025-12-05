@@ -22,6 +22,6 @@ class PoskoBencana extends Model
     ];
     public function kejadian()
     {
-        return $this->belongsTo(KejadianBencana::class, 'id_kejadian', 'id_kejadian');
+        return $this->belongsTo(KejadianBencana::class, 'kejadian_id', 'kejadian_id');
     }
 }

@@ -61,8 +61,8 @@
                         <textarea name="keterangan" class="form-control">{{ old('keterangan') }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Foto (Opsional)</label>
-                        <input type="file" name="foto" class="form-control">
+                        <label>Foto</label>
+                        <input type="file" name="media_files[]" class="form-control" multiple>
                     </div>
                     <button type="submit" class="btn btn-success">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
@@ -70,7 +70,7 @@
                     <a href="{{ route('kejadian-bencana.index') }}" class="btn btn-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Kembali
                     </a>
-
+                </form>
             </div>
         </div>
     </div>

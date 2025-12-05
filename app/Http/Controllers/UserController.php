@@ -51,6 +51,7 @@ class UserController extends Controller
             'name'     => 'required|string|max:100',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
+            'role'     => 'required|in:admin,staff,user'
         ]);
 
         //Enkripsi password
@@ -68,7 +69,7 @@ class UserController extends Controller
         ]);
 
         //Redirect dg pesan sukses
-        return redirect()->route('user.create')->with('success', 'Data user berhasil di tambahkan!');
+        return redirect()->route('users.index')->with('success', 'Data user berhasil di tambahkan!');
     }
 
     /**
@@ -100,6 +101,7 @@ class UserController extends Controller
             'name'     => 'required|string|max:100',
             'email'    => 'required|email',
             'password' => 'required|min:8|confirmed',
+            'role'     => 'required|in:admin,staff,user',
         ]);
 
         $data = $request->all();
@@ -113,7 +115,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('user.index')->with('success', 'Data user berhasil diperbarui!');
+        return redirect()->route('users.index')->with('success', 'Data user berhasil diperbarui!');
     }
 
     /**
@@ -124,6 +126,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('user.index')->with('success', 'User berhasil dihapus!');
+        return redirect()->route('users.index')->with('success', 'User berhasil dihapus!');
     }
 }

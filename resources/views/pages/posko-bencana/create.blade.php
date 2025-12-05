@@ -52,7 +52,7 @@
                             @foreach ($kejadian as $k)
                                 <option value="{{ $k->kejadian_id }}"
                                     {{ old('kejadian_id') == $k->kejadian_id ? 'selected' : '' }}>
-                                    {{ $k->jenis_bencana }} - {{ $k->lokasi }}
+                                    {{ $k->jenis_bencana }}
                                 </option>
                             @endforeach
                         </select>
@@ -69,7 +69,6 @@
                     <a href="{{ route('posko-bencana.index') }}" class="btn btn-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Kembali
                     </a>
-
                 </form>
             </div>
         </div>

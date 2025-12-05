@@ -61,7 +61,7 @@
                                 <th>Dampak</th>
                                 <th>Status</th>
                                 <th>Keterangan</th>
-                                <th>Foto</th>
+                                <th>Foto/Berita acara</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -76,21 +76,19 @@
                                     <td>{{ $item->rw }}</td>
                                     <td>{{ $item->dampak }}</td>
                                     <td class="text-center">
-                                        <span class="badge-status {{ strtolower($item->status_kejadian) == 'aktif' ? 'badge-aktif' : 'badge-selesai' }}">
+                                        <span
+                                            class="badge-status {{ strtolower($item->status_kejadian) == 'aktif' ? 'badge-aktif' : 'badge-selesai' }}">
                                             {{ ucfirst($item->status_kejadian) }}
                                         </span>
                                     </td>
                                     <td>{{ $item->keterangan ?? '-' }}</td>
                                     <td>
-                                        @if ($item->foto)
-                                            <img src="{{ asset('storage/' . $item->foto) }}" alt="Foto Bencana"
-                                                width="80">
-                                            {{-- <br>
-                                            <small>{{ asset('storage/' . $item->foto) }}</small> --}}
-                                        @else
-                                            <span class="text-muted">Tidak ada</span>
-                                        @endif
+                                        <a href="{{ route('kejadian-bencana.show', $item->kejadian_id) }}"
+                                            class="btn btn-warning btn-sm">
+                                            Lihat Detail
+                                        </a>
                                     </td>
+
                                     <td>
                                         <a href="{{ route('kejadian-bencana.edit', $item->kejadian_id) }}"
                                             class="btn btn-warning btn-sm">
