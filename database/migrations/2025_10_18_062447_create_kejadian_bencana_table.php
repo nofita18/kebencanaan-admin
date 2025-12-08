@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('dampak', 150);         // misal "Rumah rusak", "Korban luka", dst.
             $table->string('status_kejadian', 50); // misal "Aktif", "Selesai", dst.
             $table->text('keterangan')->nullable();
+            $table->text('deskripsi_singkat')->nullable(); // deskripsi
             $table->string('foto', 255)->nullable(); // path foto maksimal 255 karakter
             $table->timestamps();
         });

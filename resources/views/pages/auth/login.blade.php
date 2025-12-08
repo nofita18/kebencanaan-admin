@@ -174,6 +174,23 @@
             margin-top: 1.5rem;
         }
 
+        .login-box-logo {
+            width: 110px;
+            height: auto;
+            display: block;
+            margin: 0 auto 1rem auto;
+        }
+
+        .desc {
+            position: relative;
+            z-index: 1;
+            margin-top: 0.7rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -217,11 +234,15 @@
         <div class="login-image">
             <h2>Sistem Informasi Bina Desa</h2>
             <h3>Kebencanaan & Tanggap Darurat</h3>
+            <p class="desc">Mewujudkan desa yang sigap, aman, dan tanggap terhadap bencana.</p>
         </div>
 
         {{-- RIGHT SIDE --}}
         <div class="login-container">
             <div class="login-box">
+                <img src="{{ asset('assets-admin/images/logo-baru.png') }}" class="login-logo login-box-logo"
+                    alt="Logo Sistem">
+
                 <h3>Login Admin</h3>
                 <p class="subtitle">Masuk ke Sistem Informasi Kebencanaan</p>
 

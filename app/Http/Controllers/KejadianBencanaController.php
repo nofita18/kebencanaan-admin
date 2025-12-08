@@ -51,6 +51,8 @@ class KejadianBencanaController extends Controller
             'status_kejadian' => 'required',
             'keterangan'      => 'nullable',
 
+            'deskripsi_singkat' => 'nullable|string',
+
             // file utama
             'upload_ev'       => 'nullable|file|max:4096',
 
@@ -136,6 +138,7 @@ class KejadianBencanaController extends Controller
             'dampak'          => 'required|max:150',
             'status_kejadian' => 'required|max:50',
             'keterangan'      => 'nullable',
+            'deskripsi_singkat' => 'nullable|string',
 
             'upload_ev'       => 'nullable|file|max:4096',
             'media_files.*'   => 'nullable|file|max:4096',

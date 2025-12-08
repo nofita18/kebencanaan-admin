@@ -52,6 +52,16 @@
                         <input type="password" name="password_confirmation" class="form-control">
                     </div>
 
+                    <div class="form-group">
+                        <label>Foto Profil</label>
+                        <input type="file" name="profile_picture" class="form-control">
+
+                        @if ($user->profile_picture)
+                            <img src="{{ asset('storage/profile/' . $user->profile_picture) }}" width="120"
+                                class="mt-2 rounded">
+                        @endif
+                    </div>
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-rotate-right"></i> Update
                     </button>

@@ -1,16 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\WargaController;
-use App\Http\Controllers\KejadianController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PoskoBencanaController;
 use App\Http\Controllers\DonasiBencanaController;
 use App\Http\Controllers\KejadianBencanaController;
+use App\Http\Controllers\KejadianController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PoskoBencanaController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WargaController;
+use Illuminate\Support\Facades\Route;
 
 //Route Utama (bisa di akses tanpa login)
 // Redirect default → login
@@ -39,14 +37,19 @@ Route::middleware('checkislogin')->group(function () {
         return view('pages.dashboard.dashboard');
     })->name('dashboard');
 
-    // CRUD
-    Route::resource('users', UserController::class);//->middleware('checkrole:admin');
+                                                     // CRUD
+    Route::resource('users', UserController::class); //->middleware('checkrole:admin');
     Route::resource('warga', WargaController::class);
     Route::resource('kejadian-bencana', KejadianBencanaController::class);
     Route::resource('posko-bencana', PoskoBencanaController::class);
     Route::resource('donasi-bencana', DonasiBencanaController::class);
 
     Route::get('/kejadian', [KejadianController::class, 'index']);
+
+    Route::get('/developer/profile', function () {
+        return view('pages.developer.profile');
+    })->name('developer.profile');
+
 });
 
 Route::get('/logout', function () {

@@ -17,6 +17,7 @@ class KejadianBencana extends Model
         'dampak',
         'status_kejadian',
         'keterangan',
+        'deskripsi_singkat',
         'foto',
     ];
 

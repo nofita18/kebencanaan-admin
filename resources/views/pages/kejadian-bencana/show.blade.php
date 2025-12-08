@@ -32,8 +32,12 @@
                     <td>{{ $kejadian->status_kejadian ?? '-' }}</td>
                 </tr>
                 <tr>
-                    <th>Deskripsi</th>
+                    <th>Keterangan</th>
                     <td>{{ $kejadian->keterangan ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Deskripsi</th>
+                    <td>{{ $kejadian->deskripsi_singkat ?? '-' }}</td>
                 </tr>
             </table>
 

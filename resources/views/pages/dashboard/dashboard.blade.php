@@ -776,5 +776,98 @@
                 </div>
             </div>
         </div>
+        {{-- SLIDESHOW BINA DESA --}}
+        <style>
+            .bina-slider {
+                margin-top: 30px;
+                overflow: hidden;
+                border-radius: 12px;
+            }
+
+            .bina-slides {
+                display: flex;
+                width: 400%;
+                transition: transform 0.6s ease;
+            }
+
+            .bina-slide {
+                width: 100%;
+                position: relative;
+            }
+
+            .bina-slide img {
+                width: 100%;
+                height: 420px;
+                object-fit: cover;
+                display: block;
+            }
+
+            .bina-caption {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 12px 16px;
+                background: rgba(0, 0, 0, .6);
+                color: #fff;
+                font-size: 14px;
+            }
+        </style>
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Bina Desa – Kebencanaan & Tanggap Darurat</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="bina-slider">
+                    <div class="bina-slides" id="binaSlides">
+
+                        <div class="bina-slide">
+                            <img src="{{ asset('assets-admin/images/slideshow/01-bencana.jpg') }}">
+                            <div class="bina-caption">
+                                Kondisi bencana di wilayah desa
+                            </div>
+                        </div>
+
+                        <div class="bina-slide">
+                            <img src="{{ asset('assets-admin/images/slideshow/02-bencana.jpg') }}">
+                            <div class="bina-caption">
+                                Proses evakuasi warga oleh relawan
+                            </div>
+                        </div>
+
+                        <div class="bina-slide">
+                            <img src="{{ asset('assets-admin/images/slideshow/03-bencana.jpg') }}">
+                            <div class="bina-caption">
+                                Relawan dan posko tanggap darurat
+                            </div>
+                        </div>
+
+                        <div class="bina-slide">
+                            <img src="{{ asset('assets-admin/images/slideshow/04-bencana.jpg') }}">
+                            <div class="bina-caption">
+                                Edukasi dan kesiapsiagaan bencana
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            let binaIndex = 0;
+            const binaSlides = document.getElementById('binaSlides');
+            const binaTotal = 4;
+
+            setInterval(() => {
+                binaIndex = (binaIndex + 1) % binaTotal;
+                binaSlides.style.transform = `translateX(-${binaIndex * 100}%)`;
+            }, 8000);
+        </script>
+        {{-- END SLIDESHOW --}}
     </div>
 @endsection

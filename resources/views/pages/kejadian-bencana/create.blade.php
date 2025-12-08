@@ -61,6 +61,10 @@
                         <textarea name="keterangan" class="form-control">{{ old('keterangan') }}</textarea>
                     </div>
                     <div class="form-group">
+                        <label>Deskripsi Singkat</label>
+                        <textarea name="deskripsi_singkat" class="form-control">{{ old('deskripsi_singkat') }}</textarea>
+                    </div>
+                    <div class="form-group">
                         <label>Foto</label>
                         <input type="file" name="media_files[]" class="form-control" multiple>
                     </div>

@@ -12,7 +12,7 @@ class CreateKejadianDonasi extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
 
             // 1. KEJADIAN BENCANA
             $kejadianId = DB::table('kejadian_bencana')->insertGetId([

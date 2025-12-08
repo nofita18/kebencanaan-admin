@@ -52,6 +52,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Foto</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -62,10 +63,17 @@
                             @forelse ($users as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <img src="{{ $item->profile_picture
+                                            ? asset('storage/profile/' . $user->profile_picture)
+                                            : asset('assets-admin/images/default-profile.png') }}"
+                                            alt="Profile Picture" class="img-fluid rounded-circle" width="50">
+                                    </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->role }}</td>
                                     <td class="text-center">
+                                        <a href="{{ route('users.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
                                         <a href="{{ route('users.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>

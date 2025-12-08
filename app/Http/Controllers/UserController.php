@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -17,18 +19,15 @@ class UserController extends Controller
         // Search (nama atau email)
         if ($request->search) {
             $query->where('name', 'like', "%{$request->search}%")
-                ->orWhere('email', 'like', "%{$request->search}%");
+                  ->orWhere('email', 'like', "%{$request->search}%");
         }
 
-        // Filter email domain (opsional)
+        // Filter email domain
         if ($request->email_domain) {
             $query->where('email', 'like', "%@{$request->email_domain}");
         }
 
-        // Dropdown pagination
         $perPage = $request->input('per_page', 10);
-
-        // Pagination + simpan query ketika pindah halaman
         $users = $query->paginate($perPage)->appends($request->all());
 
         return view('pages.user.index', compact('users'));
@@ -48,28 +47,26 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:100',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
-            'role'     => 'required|in:admin,staff,user'
+            'name'            => 'required|string|max:100',
+            'email'           => 'required|email|unique:users,email',
+            'password'        => 'required|min:8|confirmed',
+            'role'            => 'required|in:admin,staff,user',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        //Enkripsi password
-        $data             = $request->all();
+        $data = $request->except('profile_picture');
         $data['password'] = Hash::make($request->password);
 
-        //Simpan ke database
+        // Upload foto profil jika ada
+        if ($request->hasFile('profile_picture')) {
+            $filename = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
+            $request->file('profile_picture')->storeAs('public/profile', $filename);
+            $data['profile_picture'] = $filename;
+        }
+
         $user = User::create($data);
 
-        session([
-            'logged_in'  => true,
-            'user_id'    => $user->id,
-            'user_name'  => $user->name,
-            'user_email' => $user->email,
-        ]);
-
-        //Redirect dg pesan sukses
-        return redirect()->route('users.index')->with('success', 'Data user berhasil di tambahkan!');
+        return redirect()->route('users.index')->with('success', 'Data user berhasil ditambahkan!');
     }
 
     /**
@@ -77,7 +74,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('pages.user.show', compact('user'));
     }
 
     /**
@@ -96,21 +94,32 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Validasi
         $request->validate([
-            'name'     => 'required|string|max:100',
-            'email'    => 'required|email',
-            'password' => 'required|min:8|confirmed',
-            'role'     => 'required|in:admin,staff,user',
+            'name'            => 'required|string|max:100',
+            'email'           => 'required|email|unique:users,email,'.$user->id,
+            'password'        => 'nullable|min:8|confirmed',
+            'role'            => 'required|in:admin,staff,user',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('password', 'profile_picture');
 
-        // Kalau password diisi, baru update
+        // Update password jika diisi
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
-        } else {
-            unset($data['password']);
+        }
+
+        // Upload foto baru jika ada
+        if ($request->hasFile('profile_picture')) {
+
+            // Hapus foto lama jika ada
+            if ($user->profile_picture && Storage::exists('public/profile/' . $user->profile_picture)) {
+                Storage::delete('public/profile/' . $user->profile_picture);
+            }
+
+            $filename = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
+            $request->file('profile_picture')->storeAs('public/profile', $filename);
+            $data['profile_picture'] = $filename;
         }
 
         $user->update($data);
@@ -124,6 +133,12 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
+
+        // Hapus foto profil jika ada
+        if ($user->profile_picture && Storage::exists('public/profile/' . $user->profile_picture)) {
+            Storage::delete('public/profile/' . $user->profile_picture);
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User berhasil dihapus!');
