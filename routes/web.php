@@ -40,7 +40,7 @@ Route::middleware('checkislogin')->group(function () {
     })->name('dashboard');
 
     // CRUD
-    Route::resource('users', UserController::class)->middleware('checkrole:admin');
+    Route::resource('users', UserController::class);//->middleware('checkrole:admin');
     Route::resource('warga', WargaController::class);
     Route::resource('kejadian-bencana', KejadianBencanaController::class);
     Route::resource('posko-bencana', PoskoBencanaController::class);
