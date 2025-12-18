@@ -44,6 +44,22 @@
             </a>
         </li>
 
+        {{-- Logistik Bencana --}}
+        <li class="nav-item {{ request()->is('logistik-bencana*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('logistik-bencana.index') }}">
+                <i class="icon-layers menu-icon"></i>
+                <span class="menu-title">Logistik Bencana</span>
+            </a>
+        </li>
+
+        {{-- Distribusi Logistik --}}
+        <li class="nav-item {{ request()->is('distribusi-logistik*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('distribusi-logistik.index') }}">
+                <i class="icon-share menu-icon"></i>
+                <span class="menu-title">Distribusi Logistik</span>
+            </a>
+        </li>
+
         {{-- Penanda Master Data --}}
         <li class="nav-section-title">Master Data</li>
 
