@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\KejadianController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PoskoBencanaController;
 use App\Http\Controllers\DonasiBencanaController;
 use App\Http\Controllers\KejadianBencanaController;
@@ -20,8 +21,6 @@ Route::get('/', function () {
 
 // Halaman login
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-
-// Proses login
 Route::post('/login', [LoginController::class, 'process'])->name('login.process');
 
 // Register
@@ -35,12 +34,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware('checkislogin')->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    //Route::get('/dashboard', function () { return view('pages.dashboard.dashboard'); })->name('dashboard');
 
                                                      // CRUD
-    Route::resource('users', UserController::class); //->middleware('checkrole:admin');
+    Route::resource('users', UserController::class);//->middleware('checkrole:admin');
     Route::resource('warga', WargaController::class);
     Route::resource('kejadian-bencana', KejadianBencanaController::class);
     Route::resource('posko-bencana', PoskoBencanaController::class);

@@ -105,4 +105,64 @@
             background-color: #2ecc71;
             /* hijau */
         }
+
+        .summary-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            padding: 22px;
+            border-radius: 12px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .summary-card h5 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .summary-card h2 {
+            margin-top: 10px;
+            font-size: 2.3rem;
+            font-weight: bold;
+        }
+
+        /* Animation Hover */
+        .summary-card:hover {
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        /* Custom colors */
+        .card-warga {
+            background: #007bff;
+        }
+
+        .card-kejadian {
+            background: #dc3545;
+        }
+
+        .card-posko {
+            background: #6f42c1;
+        }
+
+        .card-donasi {
+            background: #28a745;
+        }
+
+        .card-logistik {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .card-distribusi {
+            background: #17a2b8;
+        }
     </style>

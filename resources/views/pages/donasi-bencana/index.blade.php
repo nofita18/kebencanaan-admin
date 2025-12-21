@@ -73,7 +73,6 @@
                                     <td>{{ $d->jenis }}</td>
                                     <td>Rp {{ number_format($d->nilai, 2, ',', '.') }}</td>
                                     <td>{{ $d->kejadian->jenis_bencana ?? '-' }}</td>
-
                                     <td class="text-center">
                                         @if ($d->bukti)
                                             <img src="{{ asset('storage/donasi_bencana/' . $d->bukti) }}" width="70"
@@ -82,13 +81,15 @@
                                             <span class="text-muted">Tidak ada</span>
                                         @endif
                                     </td>
-
                                     <td class="text-center">
+                                        <a href="{{ route('donasi-bencana.show', $d->donasi_id) }}"
+                                            class="btn btn-sm btn-info">
+                                            <i class="fa-solid fa-eye"></i> Detail
+                                        </a>
                                         <a href="{{ route('donasi-bencana.edit', $d->donasi_id) }}"
                                             class="btn btn-sm btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
-
                                         <form action="{{ route('donasi-bencana.destroy', $d->donasi_id) }}" method="POST"
                                             class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                             @csrf

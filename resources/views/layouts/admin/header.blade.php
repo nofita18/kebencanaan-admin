@@ -76,8 +76,8 @@
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                     <img src="{{ auth()->user()->profile_picture
-                        ? asset('storage/profile/' . auth()->user()->profile_picture)
-                        : asset('uploads/placeholder/default.jpg') }}"
+                        ? asset('storage/uploads/profile/' . auth()->user()->profile_picture)
+                        : asset('assets-admin/images/default-profile.png') }}"
                         alt="profile" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">

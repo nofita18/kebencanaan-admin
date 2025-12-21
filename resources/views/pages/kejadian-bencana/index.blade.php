@@ -88,13 +88,11 @@
                                             Lihat Detail
                                         </a>
                                     </td>
-
                                     <td>
                                         <a href="{{ route('kejadian-bencana.edit', $item->kejadian_id) }}"
                                             class="btn btn-warning btn-sm">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
-
                                         <form action="{{ route('kejadian-bencana.destroy', $item->kejadian_id) }}"
                                             method="POST" class="d-inline"
                                             onsubmit="return confirm('Yakin ingin menghapus data ini?')">

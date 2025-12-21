@@ -4,16 +4,11 @@
 <div class="container py-4">
 
     <h2 class="mb-4">Detail Distribusi Logistik</h2>
-
     <div class="card shadow-sm">
         <div class="card-body">
-
-            <!-- Tombol Kembali -->
             <a href="{{ route('distribusi-logistik.index') }}" class="btn btn-secondary mb-3">
                 <i class="fa-solid fa-arrow-left"></i> Kembali
             </a>
-
-            <!-- Tabel Informasi Distribusi -->
             <table class="table table-bordered">
                 <tr>
                     <th width="200">Logistik</th>
@@ -40,10 +35,7 @@
                     <td>{{ $distribusi->keterangan ?? '-' }}</td>
                 </tr>
             </table>
-
-            <!-- Media / Bukti Distribusi -->
             <h5 class="mt-4">Bukti Distribusi</h5>
-
             @if(isset($distribusi->media) && $distribusi->media)
                 <div class="row mt-3">
                     <div class="col-md-3 mb-3">
@@ -55,7 +47,6 @@
             @else
                 <p class="text-muted">Belum ada bukti distribusi.</p>
             @endif
-
         </div>
     </div>
 </div>

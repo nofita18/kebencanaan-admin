@@ -40,6 +40,38 @@
                 </div>
             </div>
         </div>
+        <div class="summary-container">
+
+            <div class="summary-card card-warga">
+                <h5>Data Warga</h5>
+                <h2>{{ $totalWarga }}</h2>
+            </div>
+
+            <div class="summary-card card-kejadian">
+                <h5>Kejadian Bencana</h5>
+                <h2>{{ $totalKejadian }}</h2>
+            </div>
+
+            <div class="summary-card card-posko">
+                <h5>Posko Bencana</h5>
+                <h2>{{ $totalPosko }}</h2>
+            </div>
+
+            <div class="summary-card card-donasi">
+                <h5>Donasi Bencana</h5>
+                <h2>{{ $totalDonasi }}</h2>
+            </div>
+
+            <div class="summary-card card-logistik">
+                <h5>Logistik Bencana</h5>
+                <h2>{{ $totalLogistik }}</h2>
+            </div>
+
+            <div class="summary-card card-distribusi">
+                <h5>Distribusi Logistik</h5>
+                <h2>{{ $totalDistribusi }}</h2>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card tale-bg">

@@ -7,7 +7,7 @@
     <div class="card shadow-sm">
         <div class="card-body text-center">
             <img src="{{ $user->profile_picture
-                        ? asset('storage/profile/'.$user->profile_picture)
+                        ? asset('storage/uploads/profile/'.$user->profile_picture)
                         : asset('assets-admin/images/default-profile.png') }}"
                  alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="150">
 

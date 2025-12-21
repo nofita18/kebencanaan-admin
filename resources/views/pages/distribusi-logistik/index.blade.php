@@ -70,7 +70,7 @@
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('distribusi-logistik.show', $d->distribusi_id) }}" class="btn btn-info btn-sm">
-                                    Detail
+                                    <i class="fa-solid fa-eye"></i>Detail
                                 </a>
                                 <a href="{{ route('distribusi-logistik.edit', $d->distribusi_id) }}" class="btn btn-sm btn-warning">
                                     <i class="fa-solid fa-pen-to-square"></i> Edit

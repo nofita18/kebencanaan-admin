@@ -65,7 +65,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <img src="{{ $item->profile_picture
-                                            ? asset('storage/profile/' . $user->profile_picture)
+                                            ? asset('storage/uploads/profile/' . $item->profile_picture)
                                             : asset('assets-admin/images/default-profile.png') }}"
                                             alt="Profile Picture" class="img-fluid rounded-circle" width="50">
                                     </td>
@@ -77,7 +77,6 @@
                                         <a href="{{ route('users.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
-
                                         <form action="{{ route('users.destroy', $item->id) }}" method="POST"
                                             class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                             @csrf
@@ -87,7 +86,6 @@
                                             </button>
                                         </form>
                                     </td>
-
                                 </tr>
                             @empty
                                 <tr>

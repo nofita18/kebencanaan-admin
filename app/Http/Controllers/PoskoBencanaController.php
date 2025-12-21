@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+use App\Models\Media;
 use App\Models\KejadianBencana;
 use App\Models\PoskoBencana;
 use Illuminate\Http\Request;
@@ -11,8 +11,6 @@ class PoskoBencanaController extends Controller
     public function index(Request $request)
     {
         $query = PoskoBencana::with('kejadian');
-
-        // --- SEARCH (nama posko + alamat + penanggung jawab) ---
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('nama', 'like', "%{$request->search}%")
@@ -20,18 +18,11 @@ class PoskoBencanaController extends Controller
                     ->orWhere('penanggung_jawab', 'like', "%{$request->search}%");
             });
         }
-
-        // --- FILTER berdasarkan kejadian bencana ---
         if ($request->kejadian_id) {
             $query->where('kejadian_id', $request->kejadian_id);
         }
-
-        // PAGINATION (10 data per halaman)
         $posko = $query->paginate(10)->withQueryString();
-
-        // data kejadian untuk dropdown filter
         $kejadian = KejadianBencana::all();
-
         return view('pages.posko-bencana.index', compact('posko', 'kejadian'));
     }
 
@@ -49,27 +40,35 @@ class PoskoBencanaController extends Controller
             'alamat'           => 'required|string|max:255',
             'kontak'           => 'nullable|string|max:20',
             'penanggung_jawab' => 'nullable|string|max:100',
-            'foto'             => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'media_files.*'    => 'nullable|file|max:4096',
         ]);
-
-        $fotoName = null;
-
-        if ($request->hasFile('foto')) {
-            // simpan foto di folder public/uploads/posko
-            $fotoName = time() . '.' . $request->foto->extension();
-            $request->foto->move(public_path('uploads/posko'), $fotoName);
+        $posko = PoskoBencana::create($request->except('media_files'));
+        if ($request->hasFile('media_files')) {
+            foreach ($request->file('media_files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs(
+                    'uploads/posko_bencana',
+                    $filename,
+                    'public'
+                );
+                Media::create([
+                    'ref_table' => 'posko_bencana',
+                    'ref_id'    => $posko->posko_id,
+                    'file_path' => $path,
+                    'mime_type' => $file->getClientMimeType(),
+                ]);
+            }
         }
-
-        PoskoBencana::create([
-            'nama'             => $request->nama,
-            'alamat'           => $request->alamat,
-            'kontak'           => $request->kontak,
-            'penanggung_jawab' => $request->penanggung_jawab,
-            'kejadian_id'      => $request->kejadian_id,
-            'foto'             => $fotoName, // langsung pakai variabel yang udah didefinisikan
-        ]);
-
-        return redirect()->route('posko-bencana.index')->with('success', 'Data posko berhasil ditambahkan!');
+        return redirect()->route('posko-bencana.index')
+            ->with('success', 'Data posko berhasil ditambahkan!');
+    }
+    public function show($id)
+    {
+        $posko = PoskoBencana::findOrFail($id);
+        $media = Media::where('ref_table', 'posko_bencana')
+            ->where('ref_id', $id)
+            ->get();
+        return view('pages.posko-bencana.show', compact('posko', 'media'));
     }
 
     public function edit($id)
@@ -89,29 +88,27 @@ class PoskoBencanaController extends Controller
             'alamat'           => 'required|string|max:255',
             'kontak'           => 'nullable|string|max:20',
             'penanggung_jawab' => 'nullable|string|max:100',
-            'foto'             => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+
+            'media_files.*'    => 'nullable|file|max:4096',
         ]);
 
-        $foto = $posko->foto;
-
-        // 🟪 kalau upload foto baru → hapus lama
-        if ($request->hasFile('foto')) {
-            if ($foto && Storage::disk('public')->exists('posko/' . $foto)) {
-                Storage::disk('public')->delete('posko/' . $foto);
+        $posko->update($request->except('media_files'));
+        if ($request->hasFile('media_files')) {
+            foreach ($request->file('media_files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs(
+                    'uploads/posko_bencana',
+                    $filename,
+                    'public'
+                );
+                Media::create([
+                    'ref_table' => 'posko_bencana',
+                    'ref_id'    => $posko->posko_id,
+                    'file_path' => $path,
+                    'mime_type' => $file->getClientMimeType(),
+                ]);
             }
-            $fotoBaru = $request->file('foto')->store('posko', 'public');
-            $foto     = basename($fotoBaru);
         }
-
-        $posko->update([
-            'nama'             => $request->nama,
-            'alamat'           => $request->alamat,
-            'kontak'           => $request->kontak,
-            'penanggung_jawab' => $request->penanggung_jawab,
-            'kejadian_id'      => $request->kejadian_id,
-            'foto'             => $foto,
-        ]);
-
         return redirect()->route('posko-bencana.index')
             ->with('success', 'Data posko berhasil diperbarui!');
     }
@@ -119,12 +116,18 @@ class PoskoBencanaController extends Controller
     public function destroy($id)
     {
         $posko = PoskoBencana::findOrFail($id);
+        $media = Media::where('ref_table', 'posko_bencana')
+            ->where('ref_id', $id)
+            ->get();
 
-        if ($posko->foto && file_exists(public_path('uploads/posko/' . $posko->foto))) {
-            unlink(public_path('uploads/posko/' . $posko->foto));
+        foreach ($media as $item) {
+            if (Storage::disk('public')->exists($item->file_path)) {
+                Storage::disk('public')->delete($item->file_path);
+            }
+            $item->delete();
         }
-
         $posko->delete();
-        return redirect()->route('posko-bencana.index')->with('success', 'Data posko berhasil dihapus!');
+        return redirect()->route('posko-bencana.index')
+            ->with('success', 'Data posko berhasil dihapus!');
     }
 }

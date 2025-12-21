@@ -26,16 +26,13 @@ class LoginController extends Controller
      */
     public function process(Request $request)
     {
-        // Validasi form (MODUL AUTH)
         $request->validate([
             'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        // Ambil email & password
         $credentials = $request->only('email', 'password');
 
-        // Proses login (MODUL AUTH)
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
@@ -43,7 +40,6 @@ class LoginController extends Controller
                 ->with('success', 'Selamat datang, ' . Auth::user()->name . '!');
         }
 
-        // Jika gagal login
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->withInput();

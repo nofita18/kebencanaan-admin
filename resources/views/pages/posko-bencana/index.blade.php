@@ -65,19 +65,26 @@
                                     <td>{{ $p->penanggung_jawab ?? '-' }}</td>
                                     <td>{{ $p->kejadian->jenis_bencana ?? '-' }}</td>
                                     <td class="text-center">
-                                        @if ($p->foto)
-                                            <img src="{{ asset('storage/posko/' . $p->foto) }}" width="70"
-                                                alt="foto posko">
+                                        @php
+                                            $foto = $p->media->first();
+                                        @endphp
+                                        @if ($foto)
+                                            <img src="{{ asset('storage/' . $foto->file_path) }}" width="70"
+                                                class="rounded" alt="Foto Posko">
                                         @else
                                             <span class="text-muted">Tidak ada</span>
                                         @endif
                                     </td>
                                     <td class="text-center">
+                                        <a href="{{ route('posko-bencana.show', $p->posko_id) }}"
+                                            class="btn btn-sm btn-info mb-1">
+                                            <i class="fa-solid fa-eye"></i> Detail
+                                        </a>
+
                                         <a href="{{ route('posko-bencana.edit', $p->posko_id) }}"
                                             class="btn btn-sm btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </a>
-
                                         <form action="{{ route('posko-bencana.destroy', $p->posko_id) }}" method="POST"
                                             class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                             @csrf
@@ -87,7 +94,6 @@
                                             </button>
                                         </form>
                                     </td>
-
                                 </tr>
                             @empty
                                 <tr>

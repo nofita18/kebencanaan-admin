@@ -11,30 +11,25 @@
                 <form action="{{ route('warga.update', $warga->warga_id) }}" method="POST">
                     @csrf
                     @method('PUT')
-
                     <div class="form-group">
                         <label>Nama</label>
                         <input type="text" name="nama" class="form-control" value="{{ old('nama', $warga->nama) }}"
                             required>
                     </div>
-
                     <div class="form-group">
                         <label>Alamat</label>
                         <textarea name="alamat" class="form-control" required>{{ old('alamat', $warga->alamat) }}</textarea>
                     </div>
-
                     <div class="form-group">
                         <label>RT</label>
                         <input type="text" name="rt" class="form-control" value="{{ old('rt', $warga->rt) }}"
                             required>
                     </div>
-
                     <div class="form-group">
                         <label>RW</label>
                         <input type="text" name="rw" class="form-control" value="{{ old('rw', $warga->rw) }}"
                             required>
                     </div>
-
                     <div class="form-group">
                         <label>Jenis Kelamin</label>
                         <select name="jenis_kelamin" class="form-control" required>
@@ -58,7 +53,6 @@
                     <a href="{{ route('warga.index') }}" class="btn btn-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Kembali
                     </a>
-
                 </form>
             </div>
         </div>

@@ -58,19 +58,16 @@
                             </option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>No HP</label>
                         <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}" required>
                     </div>
-
                     <button type="submit" class="btn btn-success">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                     <a href="{{ route('warga.index') }}" class="btn btn-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Kembali
                     </a>
-
                 </form>
             </div>
         </div>
