@@ -24,15 +24,17 @@ class CreateFirstUser extends Seeder
         ]);
 
         // Tambahin 100 user random
-        // $faker = \Faker\Factory::create('id_ID');
+        $faker = Faker::create('id_ID');
 
-        // for ($i = 0; $i < 100; $i++) {
-        //     User::create([
-        //         'name' => $faker->name(),
-        //         'email' => $faker->unique()->email(),
-        //         'password' => Hash::make('password123'),
-        //         'remember_token' => Str::random(10),
-        //     ]);
-        // }
+        for ($i = 0; $i < 100; $i++) {
+            $roles = ['admin', 'staff', 'user'];
+
+            User::create([
+                'name'     => $faker->name(),
+                'email'    => $faker->unique()->safeEmail(),
+                'role'     => $faker->randomElement($roles),
+                'password' => Hash::make('password123'),
+            ]);
+        }
     }
 }

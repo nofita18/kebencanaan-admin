@@ -15,7 +15,7 @@ class CreateWargaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             DB::table('warga')->insert([
                 'nama' => $faker->name(),
                 'alamat' => $faker->address(),
