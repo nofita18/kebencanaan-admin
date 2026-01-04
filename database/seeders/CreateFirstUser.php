@@ -18,7 +18,7 @@ class CreateFirstUser extends Seeder
         // User utama (tetap)
         User::create([
             'name' => 'nopi',
-            'email' => 'pii@gmail.com',
+            'email' => 'piii@gmail.com',
             'role' => 'admin',
             'password' => Hash::make('password123'),
             // 'remember_token' => Str::random(10),
@@ -26,10 +26,8 @@ class CreateFirstUser extends Seeder
 
         // Tambahin 100 user random
         $faker = Faker::create('id_ID');
-
-        for ($i = 0; $i < 100; $i++) {
-            $roles = ['admin', 'staff', 'user'];
-
+        $roles = ['admin', 'staff', 'user'];
+        for ($i = 0; $i < 30; $i++) {
             User::create([
                 'name'     => $faker->name(),
                 'email'    => $faker->unique()->safeEmail(),
