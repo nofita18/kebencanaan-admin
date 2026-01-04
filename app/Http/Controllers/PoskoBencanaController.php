@@ -73,7 +73,7 @@ class PoskoBencanaController extends Controller
 
     public function edit($id)
     {
-        $posko    = PoskoBencana::findOrFail($id);
+        $posko    = PoskoBencana::with('media')->findOrFail($id);
         $kejadian = KejadianBencana::all();
         return view('pages.posko-bencana.edit', compact('posko', 'kejadian'));
     }

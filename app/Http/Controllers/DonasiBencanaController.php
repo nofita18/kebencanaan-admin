@@ -12,7 +12,7 @@ class DonasiBencanaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = DonasiBencana::with(['kejadian', 'posko']);
+        $query = DonasiBencana::with(['kejadian', 'posko', 'media']);
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('donatur_nama', 'like', "%{$request->search}%")
@@ -26,7 +26,7 @@ class DonasiBencanaController extends Controller
         if ($request->posko_id) {
             $query->where('posko_id', $request->posko_id);
         }
-        $donasi = $query->paginate(10)->withQueryString();
+        $donasi   = $query->paginate(10)->withQueryString();
         $kejadian = KejadianBencana::all();
         $posko    = PoskoBencana::all();
         return view('pages.donasi-bencana.index', compact('donasi', 'kejadian', 'posko'));
@@ -70,7 +70,7 @@ class DonasiBencanaController extends Controller
     public function show($id)
     {
         $donasi = DonasiBencana::with(['kejadian', 'posko'])->findOrFail($id);
-        $media = Media::where('ref_table', 'donasi_bencana')
+        $media  = Media::where('ref_table', 'donasi_bencana')
             ->where('ref_id', $donasi->donasi_id)
             ->get();
 
@@ -79,7 +79,7 @@ class DonasiBencanaController extends Controller
 
     public function edit($id)
     {
-        $donasi   = DonasiBencana::findOrFail($id);
+        $donasi   = DonasiBencana::with('media')->findOrFail($id);
         $kejadian = KejadianBencana::all();
         $posko    = PoskoBencana::all();
 
@@ -117,9 +117,13 @@ class DonasiBencanaController extends Controller
 
     public function destroy($id)
     {
-        $donasi = DonasiBencana::findOrFail($id);
-        if ($donasi->bukti_donasi && Storage::disk('public')->exists($donasi->bukti_donasi)) {
-            Storage::disk('public')->delete($donasi->bukti_donasi);
+        $donasi = DonasiBencana::with('media')->findOrFail($id);
+
+        foreach ($donasi->media as $m) {
+            if (Storage::disk('public')->exists($m->file_path)) {
+                Storage::disk('public')->delete($m->file_path);
+            }
+            $m->delete();
         }
 
         $donasi->delete();

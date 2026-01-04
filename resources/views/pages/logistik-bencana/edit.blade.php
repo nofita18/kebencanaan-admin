@@ -18,7 +18,8 @@
 
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('logistik-bencana.update', $logistik->logistik_id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('logistik-bencana.update', $logistik->logistik_id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -56,10 +57,6 @@
                     <div class="form-group">
                         <label>Keterangan</label>
                         <textarea name="keterangan" class="form-control">{{ old('keterangan', $logistik->keterangan) }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="media_files" class="form-label">Upload Media (Bisa lebih dari 1)</label>
-                        <input type="file" name="media_files[]" id="media_files" class="form-control" multiple>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-rotate-right"></i> Update

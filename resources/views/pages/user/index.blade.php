@@ -44,7 +44,9 @@
                     <div class="col-md-2">
                         <button class="btn btn-primary w-100">Filter</button>
                     </div>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary mb-3">Reset</a>
+                    <div class="col-md-2">
+                        <a href="{{ route('users.index') }}" class="btn btn-secondary w-100">Reset</a>
+                    </div>
                 </form>
 
                 <div class="table-responsive">

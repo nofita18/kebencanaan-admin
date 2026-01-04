@@ -814,16 +814,16 @@
                 margin-top: 30px;
                 overflow: hidden;
                 border-radius: 12px;
+                position: relative;
             }
 
             .bina-slides {
                 display: flex;
-                width: 400%;
                 transition: transform 0.6s ease;
             }
 
             .bina-slide {
-                width: 100%;
+                min-width: 100%;
                 position: relative;
             }
 
@@ -844,6 +844,89 @@
                 color: #fff;
                 font-size: 14px;
             }
+
+            /* Tombol Navigasi */
+            .bina-nav {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                transition: background 0.3s, transform 0.2s;
+                z-index: 10;
+            }
+
+            .bina-nav:hover {
+                background: rgba(0, 0, 0, 0.8);
+                transform: translateY(-50%) scale(1.05);
+            }
+
+            .bina-nav.prev {
+                left: 16px;
+            }
+
+            .bina-nav.next {
+                right: 16px;
+            }
+
+            /* Indikator Slide */
+            .bina-indicators {
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                z-index: 10;
+            }
+
+            .bina-indicator {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                transition: background 0.3s, transform 0.2s;
+            }
+
+            .bina-indicator.active {
+                background: white;
+                transform: scale(1.2);
+            }
+
+            .bina-indicator:hover {
+                background: white;
+                transform: scale(1.1);
+            }
+
+            /* Responsif untuk mobile */
+            @media (max-width: 768px) {
+                .bina-nav {
+                    width: 36px;
+                    height: 36px;
+                    font-size: 16px;
+                }
+
+                .bina-slide img {
+                    height: 320px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .bina-slide img {
+                    height: 250px;
+                }
+            }
         </style>
 
         <div class="card">
@@ -852,10 +935,8 @@
             </div>
 
             <div class="card-body">
-
                 <div class="bina-slider">
                     <div class="bina-slides" id="binaSlides">
-
                         <div class="bina-slide">
                             <img src="{{ asset('assets-admin/images/slideshow/01-bencana.jpg') }}">
                             <div class="bina-caption">
@@ -883,22 +964,127 @@
                                 Edukasi dan kesiapsiagaan bencana
                             </div>
                         </div>
+                    </div>
 
+                    <!-- Tombol Navigasi -->
+                    <button class="bina-nav prev" id="binaPrev">
+                        ‹
+                    </button>
+                    <button class="bina-nav next" id="binaNext">
+                        ›
+                    </button>
+
+                    <!-- Indikator Slide -->
+                    <div class="bina-indicators" id="binaIndicators">
+                        <!-- Indikator akan di-generate oleh JavaScript -->
                     </div>
                 </div>
-
             </div>
         </div>
 
         <script>
-            let binaIndex = 0;
-            const binaSlides = document.getElementById('binaSlides');
-            const binaTotal = 4;
+            document.addEventListener('DOMContentLoaded', function() {
+                let binaIndex = 0;
+                const binaSlides = document.getElementById('binaSlides');
+                const binaPrev = document.getElementById('binaPrev');
+                const binaNext = document.getElementById('binaNext');
+                const binaIndicators = document.getElementById('binaIndicators');
+                const binaTotal = 4;
+                let binaInterval;
 
-            setInterval(() => {
-                binaIndex = (binaIndex + 1) % binaTotal;
-                binaSlides.style.transform = `translateX(-${binaIndex * 100}%)`;
-            }, 8000);
+                // Fungsi untuk membuat indikator
+                function createIndicators() {
+                    for (let i = 0; i < binaTotal; i++) {
+                        const indicator = document.createElement('div');
+                        indicator.className = 'bina-indicator';
+                        if (i === 0) indicator.classList.add('active');
+                        indicator.addEventListener('click', () => goToSlide(i));
+                        binaIndicators.appendChild(indicator);
+                    }
+                }
+
+                // Fungsi untuk memperbarui indikator
+                function updateIndicators() {
+                    const indicators = document.querySelectorAll('.bina-indicator');
+                    indicators.forEach((indicator, index) => {
+                        if (index === binaIndex) {
+                            indicator.classList.add('active');
+                        } else {
+                            indicator.classList.remove('active');
+                        }
+                    });
+                }
+
+                // Fungsi untuk menampilkan slide tertentu
+                function showSlide(index) {
+                    if (index >= binaTotal) {
+                        binaIndex = 0;
+                    } else if (index < 0) {
+                        binaIndex = binaTotal - 1;
+                    } else {
+                        binaIndex = index;
+                    }
+
+                    binaSlides.style.transform = `translateX(-${binaIndex * 100}%)`;
+                    updateIndicators();
+
+                    // Reset interval otomatis
+                    resetInterval();
+                }
+
+                // Fungsi untuk pindah ke slide tertentu
+                function goToSlide(index) {
+                    showSlide(index);
+                }
+
+                // Fungsi untuk slide berikutnya
+                function nextSlide() {
+                    showSlide(binaIndex + 1);
+                }
+
+                // Fungsi untuk slide sebelumnya
+                function prevSlide() {
+                    showSlide(binaIndex - 1);
+                }
+
+                // Fungsi untuk memulai interval otomatis
+                function startInterval() {
+                    binaInterval = setInterval(nextSlide, 8000);
+                }
+
+                // Fungsi untuk mereset interval
+                function resetInterval() {
+                    clearInterval(binaInterval);
+                    startInterval();
+                }
+
+                // Event listeners untuk tombol navigasi
+                binaPrev.addEventListener('click', prevSlide);
+                binaNext.addEventListener('click', nextSlide);
+
+                // Event listener untuk keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                    }
+                });
+
+                // Inisialisasi
+                createIndicators();
+                startInterval();
+
+                // Pause interval saat hover di slideshow
+                const slider = document.querySelector('.bina-slider');
+                slider.addEventListener('mouseenter', () => {
+                    clearInterval(binaInterval);
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    startInterval();
+                });
+            });
         </script>
         {{-- END SLIDESHOW --}}
     </div>

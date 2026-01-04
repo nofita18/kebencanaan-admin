@@ -51,9 +51,11 @@
                     </div>
                     <div class="form-group">
                         <label>Bukti Donasi Saat Ini:</label><br>
-                        @if ($donasi->bukti)
-                            <img src="{{ asset('storage/donasi_bencana/' . $donasi->bukti) }}" width="150"
-                                class="rounded mb-2">
+
+                        @if ($donasi->media->count())
+                            @foreach ($donasi->media as $m)
+                                <img src="{{ asset('storage/' . $m->file_path) }}" width="150" class="rounded mb-2 me-2">
+                            @endforeach
                         @else
                             <p class="text-muted">Belum ada bukti.</p>
                         @endif

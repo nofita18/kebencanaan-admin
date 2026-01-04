@@ -142,27 +142,27 @@
 
         /* Custom colors */
         .card-warga {
-            background: #007bff;
+            background: #0d6efd;
         }
 
         .card-kejadian {
-            background: #dc3545;
+            background: #0b5ed7;
         }
 
         .card-posko {
-            background: #6f42c1;
+            background: #084298;
         }
 
         .card-donasi {
-            background: #28a745;
+            background: #1e88e5;
         }
 
         .card-logistik {
-            background: #ffc107;
+            background: #6ea8fe;
             color: #000;
         }
 
         .card-distribusi {
-            background: #17a2b8;
+            background: #5fa8ff;
         }
     </style>

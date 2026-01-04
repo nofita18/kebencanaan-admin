@@ -26,15 +26,15 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>LinkedIn:</strong>
-                <a href="https://linkedin.com/in/username" target="_blank">linkedin.com/in/username</a>
+                <a href="https://www.linkedin.com/in/nofita-nurchasanah-2b64b0360?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">linkedin.com/in/nofita</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>GitHub:</strong>
-                <a href="https://github.com/username" target="_blank">github.com/username</a>
+                <a href="https://github.com/nofita18" target="_blank">github.com/nofita</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Instagram:</strong>
-                <a href="https://instagram.com/username" target="_blank">@panggilnopi_</a>
+                <a href="https://www.instagram.com/panggilnopi_?igsh=" target="_blank">@panggilnopi_</a>
             </li>
         </ul>
         <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Kembali ke Dashboard</a>

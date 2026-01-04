@@ -30,7 +30,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-1">
+                    {{-- <div class="col-md-1">
                         <input type="text" name="rt" class="form-control" placeholder="RT"
                             value="{{ request('rt') }}">
                     </div>
@@ -47,10 +47,13 @@
                             <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
                             <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-md-2">
                         <button class="btn btn-primary w-100">Filter</button>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ route('warga.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </form>
                 <div class="table-responsive">

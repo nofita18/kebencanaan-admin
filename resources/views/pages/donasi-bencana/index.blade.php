@@ -74,9 +74,9 @@
                                     <td>Rp {{ number_format($d->nilai, 2, ',', '.') }}</td>
                                     <td>{{ $d->kejadian->jenis_bencana ?? '-' }}</td>
                                     <td class="text-center">
-                                        @if ($d->bukti)
-                                            <img src="{{ asset('storage/donasi_bencana/' . $d->bukti) }}" width="70"
-                                                alt="bukti">
+                                        @if ($d->media->count())
+                                            <img src="{{ asset('storage/' . $d->media->first()->file_path) }}"
+                                                width="70">
                                         @else
                                             <span class="text-muted">Tidak ada</span>
                                         @endif

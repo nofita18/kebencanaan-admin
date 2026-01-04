@@ -56,15 +56,18 @@
                     </div>
                     <div class="form-group">
                         <label>Foto Saat Ini:</label><br>
-                        @if ($posko->foto)
-                            <img src="{{ asset('storage/' . $posko->foto) }}" alt="Foto Posko" width="150"
-                                class="rounded mb-2">
+
+                        @if ($posko->media->count())
+                            @foreach ($posko->media as $item)
+                                <img src="{{ asset('storage/' . $item->file_path) }}" width="120"
+                                    class="rounded mb-2 me-2">
+                            @endforeach
                         @else
                             <p class="text-muted">Belum ada foto.</p>
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="foto">Ganti Foto (Opsional)</label>
+                        <label for="foto">Upload Media</label>
                         <input type="file" name="media_files[]" multiple class="form-control">
                     </div>
                     <button type="submit" class="btn btn-primary">

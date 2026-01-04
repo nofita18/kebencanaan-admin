@@ -53,10 +53,6 @@
                         <label>Keterangan</label>
                         <textarea name="keterangan" class="form-control">{{ old('keterangan') }}</textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="media_files" class="form-label">Upload Media (Bisa lebih dari 1)</label>
-                        <input type="file" name="media_files[]" id="media_files" class="form-control" multiple>
-                    </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>

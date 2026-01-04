@@ -66,11 +66,6 @@
                                     <td>{{ $l->sumber ?? '-' }}</td>
                                     <td>{{ $l->keterangan ?? '-' }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('logistik-bencana.show', $l->logistik_id) }}"
-                                            class="btn btn-sm btn-info mb-1">
-                                            <i class="fa-solid fa-eye"></i> Detail
-                                        </a>
-
                                         <a href="{{ route('logistik-bencana.edit', $l->logistik_id) }}"
                                             class="btn btn-sm btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
