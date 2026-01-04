@@ -10,7 +10,7 @@ use App\Models\DonasiBencana;
 use App\Models\LogistikBencana;
 use App\Models\DistribusiLogistik;
 
-class KejadianLengkapSeeder extends Seeder
+class CreateKejadianDonasi extends Seeder
 {
     public function run(): void
     {
