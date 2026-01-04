@@ -38,7 +38,7 @@ Route::middleware('checkislogin')->group(function () {
     //Route::get('/dashboard', function () { return view('pages.dashboard.dashboard'); })->name('dashboard');
 
                                                      // CRUD
-    Route::resource('users', UserController::class);//->middleware('checkrole:admin');
+    Route::resource('users', UserController::class)->middleware('checkrole:admin');
     Route::resource('warga', WargaController::class);
     Route::resource('kejadian-bencana', KejadianBencanaController::class);
     Route::resource('posko-bencana', PoskoBencanaController::class);
